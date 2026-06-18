@@ -18,13 +18,13 @@ def api_client():
 @pytest.fixture
 def user_alex(db):
     """Created user Alex in the  test db"""
-    return User.objects.create_user(username="alex", password="senha_segura123")
+    return User.objects.create_user(username="alex", password=fake.password())
 
 
 @pytest.fixture
 def user_beatriz(db):
     """Created user Beatriz in the test db"""
-    return User.objects.create_user(username="beatriz", password="senha_segura456")
+    return User.objects.create_user(username="beatriz", password=fake.password()) #Apenas para o gitguardian para de chiar kkk
 
 
 @pytest.fixture
