@@ -1,0 +1,48 @@
+# Configurações do próprio Docker
+.dockerignore
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# django-environ environment variables
+.env
+.env.*
+
+# Git
+.git
+.github/
+.gitignore
+
+
+# testes
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# BD locais e volumes
+*.sqlite3
+postgres_data/
+postgres_data_prod/
+mysql_data/
+
+# Arquivos estáticos e uploads locais
+static/
+staticfiles/
+media/
+
+# docs e arqs sistema
+.DS_Store
+Thumbs.db
+README.md
+.vscode/
+.idea/
+*.log

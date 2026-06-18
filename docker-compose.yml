@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:16-alpine3.23
+    container_name: task_manager_db
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    
+    expose:
+      - "5432"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    image: mavegui/task_manager_api:latest
+    container_name: task_manager_api
+
+    command: |
+      sh -c "
+      python manage.py runserver 0.0.0.0:8000
+      "
+
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - .git
+            - __pycache__
+            - db.sqlite3
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - .env
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+
+# Executar: docker compose up --build

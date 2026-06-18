@@ -1,0 +1,67 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos gerados pelo Django
+staticfiles/
+static_root/
+media/
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# django-environ environment variables
+.env.*
+.env
+
+# Exceção
+!.env.example
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test and coverage outputs
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+*.log
+logs/
+
+# Python distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Database files
+*.sqlite3
+*.db
+postgres_data/
+postgres_data_prod/
+
+# Local settings
+local_settings.py
+
+# pytest cache
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# pyright
+pyrightconfig.json
