@@ -20,7 +20,7 @@ A task-manager-API é uma solução minimalista e robusta para o gerenciamento d
 
 1. **Clone repositório:**
     ```bash
-    
+    git clone https://github.com/Mavegui/task-manager-API.git
     ```
 
 2. **Instale e execute ambiente virtual:**
@@ -57,7 +57,7 @@ A task-manager-API é uma solução minimalista e robusta para o gerenciamento d
 6. **OU USE DOCKER IMAGE**
     - Crie a pasta nginx e copie o nginx.conf
     - Configure o seu .env com base no passo 4.
-    - Baixe o docker-compose.prod.yml e execute:
+    - Baixe o docker-compose.prod.yml (Imagem da API citada aqui) e execute:
     ```bash
     docker compose -f docker-compose.prod.yml up -d
     ```
