@@ -68,7 +68,8 @@ A task-manager-API é uma solução minimalista e robusta para o gerenciamento d
     - Libera arquivos estáticos para o Nginx:
     ```bash
     docker compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
-    ```    
+    ```
+Para saber mais, acesse o [Docker Hub do Projeto](https://hub.docker.com/r/mavegui/task_manager_api).
 
 ## Arquitetura de Endpoints
 
