@@ -89,8 +89,8 @@ REST_FRAMEWORK = {
     ],
     
     'DEFAULT_THROTTLE_RATES': {
-        'user': '100/hour',
-        'anon': '20/hour',
+        'user': '100/hour', #Preciso configurar melhor futuramente.
+        'anon': '20/hour',  #Esse tbm
     },
     
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
