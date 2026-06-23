@@ -52,8 +52,8 @@ class TaskSerializer(serializers.ModelSerializer):
                 "completed": "Uma nova tarefa não pode ser criada como concluída."
             })
         
-        priority = data.get('priority')
-        description = data.get('description')
+        priority = data.get('priority', getattr(self.instance, 'priority', None))
+        description = data.get('description', getattr(self.instance, 'description', ''))
         
         if priority == Task.Priority.HIGH and len(description.strip()) < 20:
             raise serializers.ValidationError({
@@ -68,9 +68,19 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     password_confirm = serializers.CharField(write_only=True, required=True)
     
+    username = serializers.CharField(
+        required=True,
+        validators=[
+            UniqueValidator(
+                queryset=User.objects.all(),
+                message="Este nome de usuário já está em uso."
+            )
+        ]
+    )
+        
     email = serializers.EmailField(
         required=True, 
-        validators=[UniqueValidator(queryset=User.objects.all(), message="Este e-mail já está registrado.")]
+        validators=[UniqueValidator(queryset=User.objects.all(), message="Não foi possível concluir o registro. Verifique os dados informados.")]
     )
          
     class Meta:

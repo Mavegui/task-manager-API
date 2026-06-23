@@ -44,19 +44,20 @@ INSTALLED_APPS = [
     'apps.tasks',
     'rest_framework',
     'django_filters',
+    'rest_framework_simplejwt.token_blacklist',
     'drf_spectacular',
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 TEMPLATES = [
@@ -84,8 +85,13 @@ REST_FRAMEWORK = {
     ), 
     
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        "rest_framework.permissions.IsAuthenticated",
     ],
+    
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '100/hour',
+        'anon': '20/hour',
+    },
     
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
@@ -117,6 +123,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 #LOCALIZATION CONFIG'S
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -126,6 +134,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+#Config de visibilidade de páginas em prod/desenvolvimento.
+ENABLE_API_DOCS = env.bool("ENABLE_API_DOCS", default=DEBUG)
 
 #SWAGGER-UI
 SPECTACULAR_SETTINGS = {
@@ -140,9 +151,10 @@ SPECTACULAR_SETTINGS = {
         }
     ],
     "COMPONENT_SPLIT_REQUEST": True,
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 }
 
-#CORS-HEADERS CONFIG'S
+#CORS-HEADERS and another CONFIG'S
 if DEBUG:
     CORS_ALLOWED_ORIGINS = [
         "http://localhost:5173",
@@ -152,3 +164,14 @@ if DEBUG:
     ]
 else:
     CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS_PROD")
+    
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = "DENY"
+    
+    # Quando se escalar para HTTPS.
+    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # SECURE_SSL_REDIRECT = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # SECURE_HSTS_SECONDS = 31536000
+    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True

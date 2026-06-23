@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.throttling import UserRateThrottle
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
 from .models import Task
 from .serializers import RegisterSerializer, TaskSerializer
@@ -13,7 +13,7 @@ from .serializers import RegisterSerializer, TaskSerializer
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     
-    # Boas prátacas - User autenticado e Rate limit na API.
+    # Boas práticas - User autenticado e Rate limit na API.
     permission_classes = [IsAuthenticated]
     throttle_classes = [UserRateThrottle]
     
@@ -41,3 +41,4 @@ class RegisterView(CreateAPIView):
     
     #Permissão de acesso de todos os usuários a endpoint.
     permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]

@@ -211,3 +211,15 @@ def test_title_max_length_validation(api_client_auth):
     response = api_client_auth.post(url, payload, format="json")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "title" in response.data
+    
+@pytest.mark.django_db
+def test_patch_priority_high_with_short_existing_description(api_client_auth, user_primary):
+    task = Task.objects.create(
+        title="Título válido aqui",
+        description="Curta demais",
+        priority="L",
+        user=user_primary,
+    )
+    url = reverse("task-detail", args=[task.id])
+    response = api_client_auth.patch(url, {"priority": "H"}, format="json")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
